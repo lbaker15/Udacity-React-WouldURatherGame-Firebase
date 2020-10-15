@@ -1,12 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import CreateUser from './create'
 
 class Login extends React.Component {
     render () {
-        const users = Object.values(this.props.users[0])
+        const users = Object.values(this.props.receive[0])
         return (
             <div>
                 <div className="signUp">
+                    <h1 className="head">Would You Rather...</h1>
                     <h1>SignIn</h1>
                     <select id="userList">
                         
@@ -20,7 +23,12 @@ class Login extends React.Component {
                         })}
 
                     </select>
-                    <button className="button" onClick={(e) => this.props.login(e)}>Login</button>
+                    <div className="signIn">
+                        <Link to="/create">
+                            <button className="button userC">Create New User</button>
+                        </Link>
+                        <button className="button login" onClick={(e) => this.props.login(e)}>Login</button>
+                    </div>
                 </div>
             </div>
         )
@@ -28,5 +36,9 @@ class Login extends React.Component {
 }
 
 export default connect((state) => ({
- 
+    signup: state.signup,
+    receive: state.receive,
+    questions: state.questions,
+    unanswered: state.unanswered,
+    answered: state.answered,
 }))(Login)

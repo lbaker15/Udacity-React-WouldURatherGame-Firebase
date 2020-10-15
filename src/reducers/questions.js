@@ -5,7 +5,6 @@ import { FORMAT } from '../actions/format'
 export default function questions (state = [], action) {
     switch (action.type) {
         case RECEIVE_QUESTIONS :
-            console.log("FIRED")
             return state.concat(action.questions)
         case PUSH_VOTE_TO_USER :
             let questionOption = state[0][action.answer.qid]

@@ -18,3 +18,11 @@ export function votes (answer) {
         })
     }
 }
+
+export function votesEdited (answer) {
+    return (dispatch) => {
+        return Promise.all([
+            dispatch(voteHandle(answer))
+        ])
+    }
+}

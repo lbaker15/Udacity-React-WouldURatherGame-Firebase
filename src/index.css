@@ -1,8 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'poppins';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -11,13 +9,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-#userList {
-  border: 2.3px solid black;
-}
-
 .signUp {
   font-family: 'poppins';
   text-align: center;
+  margin-top: 80px;
+}
+.head {
+  font-size: 40px;
+  margin-bottom: 30px;
+}
+.signUp h2 {
+  margin-top: 35px;
+}
+#userList {
+  border: 2.3px solid black;
+  width: 360px;
+  text-align: center;
+  margin-top: 10px;
 }
 .signUp select  {
   padding: 10px 20px 10px 20px;
@@ -35,9 +43,25 @@ code {
   margin-left: 7.5px;
   cursor: pointer;
 }
+.signIn {
+  margin-top: 40px;
+  width: 100%;
+  gap: 20px;
+  display: flex;
+  justify-content: center;
+}
+.login {
+  width: 165px;
+}
+.userC {
+  width: 165px;
+}
 
-.signUp h2 {
-  margin-top: 35px;
+
+.welcome {
+  font-family: 'poppins';
+  text-align: center;
+  margin-top: 40px;
 }
 
 .card {
@@ -82,7 +106,7 @@ code {
   text-align: center;
   font-weight: 700;
   font-family: 'poppins';
-  margin-top: 70px;
+  margin-top: 55px;
   margin-bottom: 50px;
 }
 .answered h2 {
@@ -92,6 +116,7 @@ code {
   margin-bottom: -10px;
 }
 .author {
+  margin-top: 40px;
   text-align: center;
 }
 .author img {
@@ -141,16 +166,53 @@ code {
   text-decoration: none;
   color: black;
 }
-
+.textCenter {
+  text-align: center;
+  margin-top: 60px;
+}
 .add {
   text-align: center;
-  margin-top: 50px;
+  display: flex;
+  font-family: 'poppins';
+  display: flex;
+  justify-content: center;
 }
 .add input {
   border-radius: 10px;
   padding: 10px 25px 10px 25px;
   border: 2px solid black;
   margin: 10px;
+  font-family: 'poppins';
+  height: 70px;
+}
+.submit {
+  margin-top: 20px;
+  width: 110px;
+}
+.center input {
+  width: 50%;
+}
+
+.create {
+  margin-top: 60px;
+  text-align: center;
+}
+.create input {
+  width: 300px;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: 2px solid black;
+  padding: 10px;
+  margin-bottom: 25px;
+}
+.create span {
+  display: grid;
+  margin-top: 25px;
+}
+.create span button {
+  width: 200px;
+  margin: 0 auto;
+  margin-top: 10px;
 }
 
 .leader {
@@ -166,10 +228,11 @@ code {
 }
 
 .central {
-  margin-top: 50px;
+  margin-top: 65px;
 }
 
 .image {
   width: 60px;
   border-radius: 50%;
 }
+

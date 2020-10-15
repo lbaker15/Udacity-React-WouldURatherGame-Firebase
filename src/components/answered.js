@@ -13,7 +13,6 @@ class QuestionList extends React.Component {
         }))
     }
     render () {
-
         if (this.state.answered === false) {
         return (
             <div className="answered">
@@ -23,6 +22,7 @@ class QuestionList extends React.Component {
                     onClick={() => this.answered()}
                     >Answered</button>
                 </div>
+                
                     <h1>Unanswered</h1>
                         {this.props.unanswered.map(x => {
                      
@@ -122,7 +122,8 @@ class QuestionList extends React.Component {
                     })}
         </div>
         )
-    } 
+
+        } 
     }
 }
 
