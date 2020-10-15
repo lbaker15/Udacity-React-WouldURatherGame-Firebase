@@ -40,23 +40,27 @@ class App extends React.Component {
     render() {
         const { signup } = this.props
         const { loading } = this.props
+        const { create } = this.props
 
         if (loading === true) {
         return (
             <div>Loading</div>
-        )
+            )
         }  else {       
             if (signup === null) {
                 return (       
                     <div>
+
                         <Route exact path='/' render={() => (  
                             <Login login={this.login} />
                         )} />
-                        <Route path='/question' render={() => (
+                        <Route path='/create' component={CreateUser} />
+                        {create !== true &&
+                            <Route path='/:value' render={() => (
                             <Error />
                         )} />
-                        <Route path='/create' component={CreateUser} />
-
+                        }
+                        
                     </div>
                 )}      
                 else { 
@@ -107,5 +111,6 @@ export default connect((state) => ({
     questions: state.questions,
     unanswered: state.unanswered,
     answered: state.answered,
-    loading: state.loading
+    loading: state.loading,
+    create: state.create
 }))(App)

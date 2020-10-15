@@ -1,9 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import CreateUser from './create'
+import { routing } from '../actions/create'
 
 class Login extends React.Component {
+    createPage = () => {
+        this.props.dispatch(routing(true))
+        console.log(this.props.signup)
+    }
     render () {
         const users = Object.values(this.props.receive[0])
         return (
@@ -25,7 +29,9 @@ class Login extends React.Component {
                     </select>
                     <div className="signIn">
                         <Link to="/create">
-                            <button className="button userC">Create New User</button>
+                            <button 
+                            onClick={() => this.createPage()}
+                            className="button userC">Create New User</button>
                         </Link>
                         <button className="button login" onClick={(e) => this.props.login(e)}>Login</button>
                     </div>
@@ -41,4 +47,5 @@ export default connect((state) => ({
     questions: state.questions,
     unanswered: state.unanswered,
     answered: state.answered,
+    signup: state.signup,
 }))(Login)

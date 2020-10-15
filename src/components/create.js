@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createUser } from '../actions/create'
 import { Link } from 'react-router-dom'
+import { routing } from '../actions/create'
 
 class CreateUser extends React.Component {
     create = () => {
@@ -28,6 +29,9 @@ class CreateUser extends React.Component {
         this.setState({
             id: e.target.value
         })
+    }
+    componentDidMount() {
+        this.props.dispatch(routing(true))
     }
     render() {
         return (

@@ -19,6 +19,7 @@ export function formatting (question) {
     }
 }
 
+//All to do with create new user
 export function formattingEdit (ques, users, questions) {
     return (dispatch) => {
         return Promise.all([
