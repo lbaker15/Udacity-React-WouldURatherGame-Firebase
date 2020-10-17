@@ -6,7 +6,6 @@ import { routing } from '../actions/create'
 class Login extends React.Component {
     createPage = () => {
         this.props.dispatch(routing(true))
-        console.log(this.props.signup)
     }
     render () {
         const users = Object.values(this.props.receive[0])
