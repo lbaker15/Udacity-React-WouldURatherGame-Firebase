@@ -8,6 +8,7 @@ class Login extends React.Component {
         this.props.dispatch(routing(true))
     }
     render () {
+        
         const users = Object.values(this.props.receive[0])
         return (
             <div>

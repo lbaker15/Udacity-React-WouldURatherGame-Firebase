@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getData } from '../actions/receive'
 import { getQues } from '../actions/questions'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, Redirect, useLocation, useHistory } from 'react-router-dom'
 import HomeList from './answered'
 import { signIn, signOut } from '../actions/signup'
 import { unansweredQuestions } from '../actions/unanswered'
@@ -29,6 +29,9 @@ class App extends React.Component {
         //Wait for user info before calling
         setTimeout(() => {this.props.dispatch(unansweredQuestions(this.props.questions, this.props.signup, this.props.receive))}, 500)
         setTimeout(() => {this.props.dispatch(answeredQuestions(this.props.questions, this.props.signup, this.props.receive))}, 500)
+        this.setState(() => ({
+            redirect: true,
+        }))
     }
 
     logout = (e) => {
@@ -37,11 +40,27 @@ class App extends React.Component {
         this.props.dispatch(answeredQuestions(null))
     }
 
+    state = {
+        redirect: false,
+    }
+
     render() {
         const { signup } = this.props
         const { loading } = this.props
         const { create } = this.props
+        //const { from } = this.props.location.state || { from: { pathname: '/' } }
 
+        const PrivateRoute = ({ component: Component, ...rest }) => (
+            <Route {...rest} render={(props) => (
+              this.props.signup !== null
+                ? <Component {...props} />
+                : <Redirect to={{
+                    pathname: '/',
+                    state: { from: props.location }
+                  }} />
+            )} />
+        )
+        
         if (loading === true) {
         return (
             <div>Loading</div>
@@ -51,15 +70,13 @@ class App extends React.Component {
                 return (       
                     <div>
 
-                        <Route exact path='/' render={() => (  
-                            <Login login={this.login} />
-                        )} />
+
+
+                        <Route exact path='/' render={() => <Login login={this.login} />} />
                         <Route path='/create' component={CreateUser} />
-                        {create !== true &&
-                            <Route path='/:value' render={() => (
-                            <Error />
-                        )} />
-                        }
+                        <PrivateRoute path="/leaderboard" component={board} />
+
+
                         
                     </div>
                 )}      
