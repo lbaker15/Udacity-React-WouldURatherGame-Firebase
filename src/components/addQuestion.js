@@ -7,44 +7,44 @@ class addQuestion extends React.Component {
     state = {
         optionOne: '',
         optionTwo: '',
-        submitted: false
+        submitted: false,
+        btnPressed: false,
     }
     update = (e) => {
-        if (e.target.name === "optionOne") {
-            this.setState({
-                optionOne: e.target.value,
-            })
-        } else {
-            this.setState({
-                optionTwo: e.target.value,
-            })            
-        }
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
     submit = (e) => {
         e.preventDefault()
-        if (this.state.optionOne.length !== 0 && this.state.optionTwo.length !== 0) {
             if(this.props.receive[0][this.props.signup].created === true) {
                 const question = {
                     optionOneText: this.state.optionOne,
                     optionTwoText: this.state.optionTwo,
                     author: this.props.signup,
                 }
+                this.setState((prev) => ({ btnPressed: !prev.btnPressed }))
                 this.props.dispatch(formattingEdit(question, this.props.receive, this.props.questions))
+                setTimeout(() => {
+                    this.setState((prev) => ({
+                        submitted: !prev.submitted,
+                    }))
+                }, 1000)
             } else {
                 const question = {
                     optionOneText: this.state.optionOne,
                     optionTwoText: this.state.optionTwo,
                     author: this.props.signup,
                 }
+                this.setState((prev) => ({ btnPressed: !prev.btnPressed }))
                 this.props.dispatch(formatting(question))
                 setTimeout(() => {
                     this.setState((prev) => ({
-                        submitted: !prev.submitted
+                        submitted: !prev.submitted,
                     }))
-                }, 500)
+                }, 1000)
             }
-        }
-    }
+     }
     render() {
         return(
             <div className="textCenter">
@@ -71,6 +71,7 @@ class addQuestion extends React.Component {
                     type="submit" 
                     className="button submit"
                     onClick={(e) => this.submit(e)}
+                    disabled={this.state.optionOne.length < 1 || this.state.optionTwo.length < 1 || this.state.btnPressed === true}
                     >Submit</button>
                 </form>
             </div>

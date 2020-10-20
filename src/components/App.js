@@ -43,8 +43,7 @@ class App extends React.Component {
     }
 
     render() {
-        const { signup } = this.props
-        const { loading } = this.props
+        const { signup, loading } = this.props
 
         const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route {...rest} render={(props) => (
@@ -57,7 +56,7 @@ class App extends React.Component {
             )} />
         )
      
-        if (loading === true) {
+        if (loading) {
         return (
             <div>Loading</div>
             )

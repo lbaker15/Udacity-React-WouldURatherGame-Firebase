@@ -31,17 +31,14 @@ class AnsweredLink extends React.Component {
                 opposite: opp,
                 created: true
             }
-            //Updates the state on user (under receive)
-            this.props.dispatch(votesEdited
-                (answer))
-            //Updates unanswered questions - on time out so the user info passed in has time to update answered questions
-            setTimeout(() => {this.props.dispatch(unansweredQuestions(this.props.questions, this.props.signup, this.props.receive))}, 1000)
-            setTimeout(() => {this.props.dispatch(answeredQuestions(this.props.questions, this.props.signup, this.props.receive))}, 1000)
-            setTimeout(() => {
-                this.setState((prev) => ({
-                    answered: !prev.answered,
-                }))
-                }, 2000)
+            const myPromise = new Promise((res, rej) => {
+                res(this.props.dispatch(votesEdited(answer)))
+            })
+            .then(() => this.props.dispatch(unansweredQuestions(this.props.questions, this.props.signup, this.props.receive)) )
+            .then(() => this.props.dispatch(answeredQuestions(this.props.questions, this.props.signup, this.props.receive)) )
+            .then(() =>  this.setState((prev) => ({answered: !prev.answered,})) )
+            .catch((err) => console.log(err))    
+
         } else {
             const answer = {
                 authedUser: this.props.signup,
@@ -49,16 +46,14 @@ class AnsweredLink extends React.Component {
                 answer: selectedOpt,
                 opposite: opp
             }
-            //Updates the state on user (under receive)
-            this.props.dispatch(votes(answer))
-            //Updates unanswered questions - on time out so the user info passed in has time to update answered questions
-            setTimeout(() => {this.props.dispatch(unansweredQuestions(this.props.questions, this.props.signup, this.props.receive))}, 1000)
-            setTimeout(() => {this.props.dispatch(answeredQuestions(this.props.questions, this.props.signup, this.props.receive))}, 1000)
-            setTimeout(() => {
-                this.setState((prev) => ({
-                    answered: !prev.answered,
-                }))
-            }, 2000)
+            const myPromise = new Promise((res, rej) => {
+                res(this.props.dispatch(votes(answer)))
+            })
+            .then(() => this.props.dispatch(unansweredQuestions(this.props.questions, this.props.signup, this.props.receive)) )
+            .then(() => this.props.dispatch(answeredQuestions(this.props.questions, this.props.signup, this.props.receive)) )
+            .then(() =>  this.setState((prev) => ({answered: !prev.answered,})) )
+            .catch((err) => console.log(err))
+       
         }
     }
 
