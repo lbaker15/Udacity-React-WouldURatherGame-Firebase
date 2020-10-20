@@ -6,6 +6,7 @@ import monkey from './images/avatars/monkey.png';
 import { votes, votesEdited } from '../actions/votes';
 import { unansweredQuestions } from '../actions/unanswered';
 import { answeredQuestions } from '../actions/answered';
+import Err404 from './404'
 
 class AnsweredLink extends React.Component {
     state = {
@@ -20,7 +21,6 @@ class AnsweredLink extends React.Component {
         
         const quesAuthor = Object.values(this.props.questions[0]).filter(x => x.id === this.props.match.params.value)
         const authorItem = this.props.receive[0][quesAuthor[0].author]
-        console.log(authorItem.created)
 
         //This condition allows created user to vote on own questions
         if (this.props.receive[0][this.props.signup].created || authorItem.created !== undefined) {
@@ -64,10 +64,13 @@ class AnsweredLink extends React.Component {
 
     render() {      
         const theQuestion = Object.values(this.props.questions[0]).filter(x => x.id === this.props.match.params.value)
+        
+        if (theQuestion.length !== 0) {
         const author = theQuestion[0].author
         const avatar = this.state
         const answeredQ = this.props.answered.filter(x => x.id === theQuestion[0].id)
-        console.log(this.props.questions)
+       
+        
         return (
            <div>
                {this.state.answered === false &&
@@ -142,7 +145,10 @@ class AnsweredLink extends React.Component {
             )
             }
             </div>
-        )
+        ) 
+        } else {
+            return <Err404 />
+        }
     }
 }
 

@@ -32,7 +32,6 @@ export default function receive (state = [], action) {
                     ...state
                 }         
         }
-        break
         case CREATE :
             let thisID = action.user.id
             let obj = { [thisID]: {...action.user} }

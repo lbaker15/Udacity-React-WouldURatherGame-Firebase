@@ -4,7 +4,7 @@ import { getData } from '../actions/receive'
 import { getQues } from '../actions/questions'
 import { Route, Link, Redirect, useLocation, useHistory } from 'react-router-dom'
 import HomeList from './answered'
-import { signIn, signOut } from '../actions/signup'
+import { signOut } from '../actions/signup'
 import { unansweredQuestions } from '../actions/unanswered'
 import { answeredQuestions } from '../actions/answered'
 import '../index.css'
@@ -15,6 +15,19 @@ import addQuestion from './addQuestion'
 import board from './leaderboard'
 import CreateUser from './create'
 
+function LoginPage() {
+    let history = useHistory()
+    let location = useLocation()
+    let {from} = location.state || {from: {pathName: "/"}}
+    let login = () => {
+        history.replace(from)
+    } 
+    return (
+        <Route exact path='/'>
+            <Login log={login} />    
+        </Route> 
+    )
+}
 
 class App extends React.Component {
 
@@ -23,32 +36,15 @@ class App extends React.Component {
         this.props.dispatch(getQues())
     }
 
-    login = (e) => {
-        const user = document.getElementById("userList").value
-        this.props.dispatch(signIn(this.props.receive[0][user].id))
-        //Wait for user info before calling
-        setTimeout(() => {this.props.dispatch(unansweredQuestions(this.props.questions, this.props.signup, this.props.receive))}, 500)
-        setTimeout(() => {this.props.dispatch(answeredQuestions(this.props.questions, this.props.signup, this.props.receive))}, 500)
-        this.setState(() => ({
-            redirect: true,
-        }))
-    }
-
     logout = (e) => {
         this.props.dispatch(signOut(null))
         this.props.dispatch(unansweredQuestions(null))
         this.props.dispatch(answeredQuestions(null))
     }
 
-    state = {
-        redirect: false,
-    }
-
     render() {
         const { signup } = this.props
         const { loading } = this.props
-        const { create } = this.props
-        //const { from } = this.props.location.state || { from: { pathname: '/' } }
 
         const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route {...rest} render={(props) => (
@@ -60,24 +56,26 @@ class App extends React.Component {
                   }} />
             )} />
         )
-        
+     
         if (loading === true) {
         return (
             <div>Loading</div>
             )
         }  else {       
             if (signup === null) {
+
                 return (       
                     <div>
-
-
-
-                        <Route exact path='/' render={() => <Login login={this.login} />} />
+                        
+                        <LoginPage />       
                         <Route path='/create' component={CreateUser} />
                         <PrivateRoute path="/leaderboard" component={board} />
+                        <PrivateRoute path="/add" component={addQuestion} />
+                        <PrivateRoute path='/question/:value' component={AnsweredLink} />
+                        {this.props.create !== true && 
+                            <Route path='/:value' component={Error} />
+                        }
 
-
-                        
                     </div>
                 )}      
                 else { 
@@ -101,8 +99,7 @@ class App extends React.Component {
                             <Route exact path='/' render={() => (         
                                 <div>
                                   <HomeList />
-                                  <div className="center">
-                                  </div>
+           
                                 </div>
                             )} />
             
@@ -127,3 +124,16 @@ export default connect((state) => ({
     loading: state.loading,
     create: state.create
 }))(App)
+
+/*
+function LoginPage() {
+    let history = useHistory()
+    let location = useLocation()
+    let {from} = location.state || {from: {pathName: "/"}}
+     return (
+        <Route exact path='/'>
+            <Login />    
+        </Route> 
+    )
+}
+*/

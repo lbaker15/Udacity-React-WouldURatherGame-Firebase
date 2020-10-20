@@ -1,11 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { formatting, formattingEdit } from '../actions/format'
+import { Redirect } from 'react-router-dom'
 
 class addQuestion extends React.Component {
     state = {
         optionOne: '',
-        optionTwo: ''
+        optionTwo: '',
+        submitted: false
     }
     update = (e) => {
         if (e.target.name === "optionOne") {
@@ -20,26 +22,36 @@ class addQuestion extends React.Component {
     }
     submit = (e) => {
         e.preventDefault()
-
-        if(this.props.receive[0][this.props.signup].created === true) {
-            const question = {
-                optionOneText: this.state.optionOne,
-                optionTwoText: this.state.optionTwo,
-                author: this.props.signup,
+        if (this.state.optionOne.length !== 0 && this.state.optionTwo.length !== 0) {
+            if(this.props.receive[0][this.props.signup].created === true) {
+                const question = {
+                    optionOneText: this.state.optionOne,
+                    optionTwoText: this.state.optionTwo,
+                    author: this.props.signup,
+                }
+                this.props.dispatch(formattingEdit(question, this.props.receive, this.props.questions))
+            } else {
+                const question = {
+                    optionOneText: this.state.optionOne,
+                    optionTwoText: this.state.optionTwo,
+                    author: this.props.signup,
+                }
+                this.props.dispatch(formatting(question))
+                setTimeout(() => {
+                    this.setState((prev) => ({
+                        submitted: !prev.submitted
+                    }))
+                }, 500)
             }
-            this.props.dispatch(formattingEdit(question, this.props.receive, this.props.questions))
-        } else {
-            const question = {
-                optionOneText: this.state.optionOne,
-                optionTwoText: this.state.optionTwo,
-                author: this.props.signup,
-            }
-            this.props.dispatch(formatting(question))
         }
     }
     render() {
         return(
             <div className="textCenter">
+
+                {this.state.submitted === true &&
+                    <Redirect to="/" />
+                }
                 <h2>Would you rather...</h2>
                 <form>
                     <div className="add">
