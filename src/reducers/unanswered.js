@@ -20,16 +20,12 @@ export default function unanswered (state=[], action) {
                     }
                 })
                 let number = notAnswered.length - 1
+                //Returns array of not answered questions
+                //console.log(notAnswered[number])
                 //Ordering by timestamp
                 if (number > 0) {
-                    const times = notAnswered[number].map(x => x.timestamp)
-                    const ordered = times.sort((a, b) => b - a)
-            
-                    const orderedUnanswered = ordered.map(x => {
-                        return notAnswered[number].filter(y => y.timestamp === x)
-                    })
-                    //console.log(orderedUnanswered.flat())
-                    return orderedUnanswered.flat()
+                    const times = notAnswered[number].sort((a, b) => b.timestamp - a.timestamp)
+                    return times.flat()
                 } else {
                     return Object.values(action.questionList[0])
                 }                

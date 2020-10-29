@@ -11,13 +11,8 @@ export default function answered (state=[], action) {
                 })
                 })
                 //Ordering by timestamp
-                const times = a.flat().map(x => x.timestamp)
-                const ordered = times.sort((a, b) => b - a)     
-                const orderedAnswered = ordered.map(x => {
-                    return a.flat().filter(y => y.timestamp === x)
-                })
-                 return orderedAnswered.flat()
-
+                const times = a.flat().sort((a, b) => b.timestamp - a.timestamp)
+                return times.flat()
             } else {
                 const emptyArray = []
                 return emptyArray

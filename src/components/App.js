@@ -30,7 +30,6 @@ function LoginPage() {
 }
 
 class App extends React.Component {
-
     componentDidMount () {
         this.props.dispatch(getData())
         this.props.dispatch(getQues())
@@ -44,7 +43,6 @@ class App extends React.Component {
 
     render() {
         const { signup, loading } = this.props
-
         const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route {...rest} render={(props) => (
               this.props.signup !== null

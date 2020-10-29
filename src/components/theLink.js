@@ -10,10 +10,12 @@ import Err404 from './404'
 
 class AnsweredLink extends React.Component {
     state = {
-        tylermcginnis: elephant,
-        sarahedo: dog,
-        johndoe: monkey,
         answered: false
+    }
+    avatars = {
+        "elephant": elephant,
+        "dog": dog,
+        "monkey": monkey
     }
     pushVote = (e) => {
         let selectedOpt = (this.props.questions[0][e.target.name].optionOne.text === e.target.value) ? 'optionOne' : 'optionTwo'
@@ -62,7 +64,8 @@ class AnsweredLink extends React.Component {
         
         if (theQuestion.length !== 0) {
         const author = theQuestion[0].author
-        const avatar = this.state
+        const avatarURL = this.props.receive[0][author].avatarURL
+        const avatar = this.avatars
         const answeredQ = this.props.answered.filter(x => x.id === theQuestion[0].id)
        
         
@@ -73,7 +76,7 @@ class AnsweredLink extends React.Component {
                 <div>
                 <div className="author">
                     <h3>By {theQuestion[0].author} </h3>
-                    <img src={avatar[author]} alt="avatar" />
+                    <img src={avatar[avatarURL]} alt="avatar" />
                 </div>
                 <div key={theQuestion[0].id} className="map">
 

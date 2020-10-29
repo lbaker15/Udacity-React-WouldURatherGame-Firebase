@@ -5,10 +5,10 @@ import elephant from './images/avatars/elephant.png';
 import monkey from './images/avatars/monkey.png';
 
 class board extends React.Component {
-    state = {
-        tylermcginnis: elephant,
-        sarahedo: dog,
-        johndoe: monkey,        
+    avatars = {
+        "elephant": elephant,
+        "dog": dog,
+        "monkey": monkey
     }
     render(){
         const leaderBoard = Object.values(this.props.receive[0]).map(x => {
@@ -23,7 +23,7 @@ class board extends React.Component {
             })
         
         const ordered = leaderBoard.sort(function(a, b){return b.score - a.score})
-        const avatar = this.state
+        const avatar = this.avatars
 
         return (
             <div className="central">
@@ -32,7 +32,7 @@ class board extends React.Component {
                         <div key={x.id} className="leader">
                             ID: {x.id}
                             <br />
-                            <img alt="avatar" className="image" src={avatar[x.id]} />
+                            <img alt="avatar" className="image" src={avatar[x.avatar]} />
                             <br />
                             Name: {x.name}
                             <br />

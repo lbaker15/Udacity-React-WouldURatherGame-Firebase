@@ -12,21 +12,26 @@ class Login extends React.Component {
     }
     login = (e) => {
         const user = document.getElementById("userList").value
-        this.props.dispatch(signIn(this.props.receive[0][user].id))
+        const toSend = this.props.receive.filter(x => x.id === user)
+        console.log(toSend)
+        this.props.dispatch(signIn(toSend[0].id))
         //Wait for user info before calling
         setTimeout(() => {this.props.dispatch(unansweredQuestions(this.props.questions, user, this.props.receive))}, 100)
         setTimeout(() => {this.props.dispatch(answeredQuestions(this.props.questions, user, this.props.receive))}, 200)
         this.props.log()
     }
-    render () {
-        
-        const users = Object.values(this.props.receive[0])
-       
+
+    
+    
+    render () { 
+        const users = this.props.receive
         return (
             <div>
                 <div className="signUp">
                     <h1 className="head">Would You Rather...</h1>
                     <h1>SignIn</h1>
+
+            
                     <select id="userList">
                         
                         {users.map(x => {
