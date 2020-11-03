@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createUser } from '../actions/create'
+import {getData} from '../actions/receive'
 import { Link } from 'react-router-dom'
 import { routing } from '../actions/create'
 import { Redirect } from 'react-router-dom'
@@ -16,32 +17,51 @@ class CreateUser extends React.Component {
         id: '',
         avatar: '',
         submitted: false,
-        alert: ''
+        alert: '',
+        nameclick: false,
+        idclick: false
     }
     create = () => {
-        if (this.state.avatar.length && this.state.name.length && this.state.id.length !== 0) {
-            const obj = {
-                "id": this.state.id,
-                "name": this.state.name,
-                avatarURL: this.state.avatar,
-                created: true
-            }
-            const ans = {"8xf0y6ziyjabvozdd253nd": 'optionOne',}; const ques = ["8xf0y6ziyjabvozdd253nd"];
+        if (this.state.avatar.length && this.state.name.length && this.state.id.length > 1) {
+            
             const itemsRef = firebase.database().ref('items')
-            const toPush = 
-            {[this.state.id]: { 
-                ...obj, 
-                answers: ans,
-                questions: ques  
-                } 
-            }
-            itemsRef.push(toPush)
-
-            setTimeout(() => {
-                this.setState((prev) => ({
-                    submitted: !prev.submitted,
-                }))
-                }, 1000)
+            itemsRef.on('value', (snapshot) => {
+                let items = snapshot.val()
+                const person = items[this.state.id]
+                if (person === undefined) {
+                    const obj = {
+                        "id": this.state.id,
+                        "name": this.state.name,
+                        avatarURL: this.state.avatar
+                    }
+                    const ans = {"123": 'optionOne',}; const ques = ["8xf0y6ziyjabvozdd253nd"];
+                    const toPush = 
+                    {[this.state.id]: { 
+                        ...obj, 
+                        answers: ans,
+                        questions: ques  
+                        } 
+                    }
+                    new Promise((res, rej) => {
+                        const itemsRef = firebase.database().ref('items');
+                        const newRef = itemsRef.push();
+                        const newKey = newRef.key
+                        const realRef = itemsRef.child(this.state.id)
+                        res(realRef.set(toPush) )
+                    })
+                    .then(() => this.props.dispatch(getData()))
+                    .then(() => {
+                        this.setState((prev) => ({
+                            submitted: !prev.submitted,
+                        }))               
+                    }) 
+                } else {
+                    this.setState({
+                        alert: 'This username is already taken, please select another.'
+                    })
+                }
+            })
+            /**/     
         } else {
             this.setState({
                 alert: "Please fill in all fields before submitting."
@@ -49,9 +69,16 @@ class CreateUser extends React.Component {
         }
     }
     update = (e) => {
+        console.log(e.target.id)
         this.setState({
-            [e.target.id]: e.target.value
+            [e.target.id]: e.target.value,
         })
+    }
+    clicked = (e) => {
+        const value = e.target.id + "click"
+        this.setState((prev) => ({
+            [value]: !prev.value
+        }))
     }
     componentDidMount() {
         this.props.dispatch(routing(true))
@@ -61,16 +88,6 @@ class CreateUser extends React.Component {
             let items = snapshot.val()
             let newState = []
             console.log(Object.values(items))
-            /*for (let item in items) {
-                newState.push({
-                    avatarURL: items[item].url,
-                    name: items[item].name,
-                    id: items[item].username
-                })
-            }
-            this.setState({
-                items: newState
-            })*/
         })    
     }
     handleAvatar = (e) => {
@@ -81,7 +98,8 @@ class CreateUser extends React.Component {
 
 
     render() {
-        return (
+         return (
+         <div className="aligner">
             <div className="create">
                 {this.state.submitted === true &&
                     <Redirect to="/" />
@@ -93,6 +111,8 @@ class CreateUser extends React.Component {
                     <input
                     value={this.state.name}
                     id="name"
+                    className={this.state.name.length > 0 ? "green" : this.state.nameclick === false ? "" : "red"}
+                    onClick={(e) => this.clicked(e)}
                     onChange={(e) => this.update(e)}
                     ></input>
 
@@ -100,14 +120,16 @@ class CreateUser extends React.Component {
                     <input
                     value={this.state.id}
                     id="id"
+                    className={this.state.id.length > 0 ? "green" : this.state.idclick === false ? "" : "red"}
+                    onClick={(e) => this.clicked(e)}
                     onChange={(e) => this.update(e)}
                     ></input>
 
                     <label>Select Your Avatar</label>
                     <div className="selector">
-                    <img alt="avatarOne" onClick={(e) => this.handleAvatar(e)} id="dog" className="select" src={dog} />
-                    <img alt="avatarTwo" onClick={(e) => this.handleAvatar(e)} id="elephant" className="select" src={elephant} />
-                    <img alt="avatarThree" onClick={(e) => this.handleAvatar(e)} id="monkey" className="select" src={monkey} />
+                        <img alt="avatarOne" onClick={(e) => this.handleAvatar(e)} id="dog" className={(this.state.avatar === 'dog') ? "selectGreen" : "select"} src={dog} />
+                        <img alt="avatarTwo" onClick={(e) => this.handleAvatar(e)} id="elephant" className={(this.state.avatar === 'elephant') ? "selectGreen" : "select"}  src={elephant} />
+                        <img alt="avatarThree" onClick={(e) => this.handleAvatar(e)} id="monkey" className={(this.state.avatar === 'monkey') ? "selectGreen" : "select"}  src={monkey} />
                     </div>
 
                     <button 
@@ -122,6 +144,7 @@ class CreateUser extends React.Component {
                     </Link>
                 </span>
             </div>
+         </div>
         )
     }
 }

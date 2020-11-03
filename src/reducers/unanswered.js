@@ -6,29 +6,30 @@ export default function unanswered (state=[], action) {
         case UNANSWERED : 
             if (action.questionList !== null) {
                 //Getting the relevant user
-                let currentUserAnswers = Object.values(action.answeredQ[0]).filter(x => x.id === action.user)
+                let currentUserAnswers = action.userList.filter(x => x.id === action.user)
                 if (currentUserAnswers[0] !== undefined) {
+
                 //Ids of users answered questions
                 let userAnsList = Object.keys(currentUserAnswers[0].answers)
+
+                //Remove the default option from user answered list
+                //const userAnsListPop = userAnsList.filter(x => x !== "123")
+
                 let newQuestionList = []
+                const questionValues = action.questionList.map(x => Object.values(x)).flat()
                 //Returns the objects of unanswered questions and updates state
                 let notAnswered = userAnsList.map(y => {   
                     if (newQuestionList.length === 0) {
-                        return newQuestionList = Object.values(action.questionList[0]).filter(x => x.id !== y)
+                        return newQuestionList = questionValues.filter(x => x.id !== y)
                     } else {
                         return newQuestionList = newQuestionList.filter(x => x.id !== y)
                     }
                 })
                 let number = notAnswered.length - 1
                 //Returns array of not answered questions
-                //console.log(notAnswered[number])
                 //Ordering by timestamp
-                if (number > 0) {
-                    const times = notAnswered[number].sort((a, b) => b.timestamp - a.timestamp)
-                    return times.flat()
-                } else {
-                    return Object.values(action.questionList[0])
-                }                
+                const times = notAnswered[number].sort((a, b) => b.timestamp - a.timestamp)
+                return times.flat()         
                 }
             } else {
                 return state = []

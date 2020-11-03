@@ -5,6 +5,171 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --yellow: #ffec82;
+  --btnYellow: #fcd600;
+  --purple:  #b866ff;
+  --aqua: #54ecfd;
+  --btnAqua: #15e0f7;
+  --peach: #ffd7db;
+  --pink: #ffbce7;
+  --btnPink: #ff9adc;
+  --blue: #6b7fff;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; 
+  border-top: 16px solid var(--aqua); 
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 1.5s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  50% {border-top: 16px solid var(--purple)}
+  100% { transform: rotate(360deg); }
+}
+
+.colorOne {
+  background: var(--btnAqua);
+}
+.colorTwo {
+  background: var(--btnYellow);
+}
+.colorThree {
+  background: var(--purple);
+}
+.colorFour {
+  background: var(--blue);
+}
+.colorFive {
+  background: black;
+}
+.colorSix {
+  background: var(--btnPink);
+}
+.randomCircle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: -1;
+  opacity: 0.5;
+}
+.circleOne {
+  background: var(--purple);
+  height: 560px;
+  width: 560px;
+  position: absolute;
+  z-index: -10;
+  border-radius: 50%;
+}
+.circleTwo {
+  background: var(--yellow);
+  height: 170px;
+  width: 170px;
+  position: absolute;
+  z-index: -9;
+  border-radius: 50%;
+  margin-left: -300px;
+  margin-top: 420px;
+}
+.circleThree {
+  background:var(--aqua);
+  height: 300px;
+  width: 300px;
+  position: absolute;
+  z-index: -9;
+  border-radius: 50%;
+  margin-left: 470px;
+  margin-top: 220px;
+}
+.circleFour {
+  background: var(--pink);
+  height: 220px;
+  width: 220px;
+  position: absolute;
+  z-index: -9;
+  border-radius: 50%;
+  margin-left: -550px;
+  margin-top: -370px;
+}
+.circleFive {
+  background:  var(--peach);
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: -6;
+  margin-left: 350px;
+  margin-top: -450px;
+}
+.circleSix {
+  background: white;
+  height: 108%;
+  width: 100%;
+  position: absolute;
+  z-index: -100;
+}
+.circleSeven {
+  background:  var(--blue);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: -1;
+  margin-left: 500px;
+  margin-top: 550px;
+}
+.circleEight {
+  background:  var(--peach);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: -12;
+  margin-left: -0px;
+  margin-top: 650px;
+}
+.circleNine {
+  background:  var(--yellow);
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: -12;
+  margin-left: 630px;
+  margin-top: -260px;
+}
+.circleTen {
+  background:  var(--blue);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: -5;
+  margin-left: -600px;
+  margin-top: 60px;
+}
+.circleEleven {
+  background:var(--aqua);
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: -12;
+  margin-left: -550px;
+  margin-top: 500px;
+}
+
+1C7ED9
+008BF8
+7F7EC9
+
+
+
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -12,7 +177,7 @@ code {
 .signUp {
   font-family: 'poppins';
   text-align: center;
-  margin-top: 80px;
+  margin-top: -70px;
 }
 .head {
   font-size: 40px;
@@ -34,7 +199,6 @@ code {
 }
 .button {
   font-family: 'poppins';
-  background: black;
   color: white;
   font-size: 16px;
   padding: 10px 15px 10px 15px;
@@ -93,7 +257,6 @@ code {
 .toggle {
   margin-top: 0px;
   font-family: 'poppins';
-  background: black;
   color: white;
   font-size: 16px;
   padding: 10px 15px 10px 15px;
@@ -102,12 +265,17 @@ code {
   cursor: pointer;
   float:right;
 }
+
+.cardAligner {
+  width: 90%;
+  margin: 0 auto;
+}
 .answered h1 {
   text-align: center;
   font-weight: 700;
   font-family: 'poppins';
   margin-top: 55px;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 .answered h2 {
   text-align: center;
@@ -124,18 +292,37 @@ code {
   height: 50px;
   border-radius: 50%;
 }
+.indvCardAligner {
+  width: 80%;
+  margin: 0 auto;
+  height: 100%;
+}
 .map {
   margin-top: 50px;
   display: flex;
-  justify-content: space-around;
-  width: 90%;
-  margin-left: 5%;
+  justify-content: center;
+  width: 80%;
+  margin-left: 10%;
+  gap: 5%;
 }
 .cardMap {
   margin-bottom: 40px;
   box-shadow: 5px 5px 10px #c3c3c3;
   border-radius: 7.5px;
-  width: 45%;
+  width: 40%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  cursor: pointer;
+  background: white;
+  font-family: 'poppins';
+  font-size: 16px;
+  border: none;
+}
+.cardMapMain {
+  margin-bottom: 40px;
+  box-shadow: 5px 5px 10px #c3c3c3;
+  border-radius: 7.5px;
+  width: 50%;
   padding-top: 40px;
   padding-bottom: 40px;
   cursor: pointer;
@@ -161,6 +348,13 @@ code {
 .center {
   display: flex;
   justify-content: center;
+}
+.aligner  {
+  height: 95vh;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: -15px;
 }
 .link {
   text-decoration: none;
@@ -189,12 +383,15 @@ code {
   margin-top: 20px;
   width: 110px;
 }
+.submit:disabled {
+  opacity: 0.5;
+}
 .center input {
   width: 50%;
 }
 
 .create {
-  margin-top: 60px;
+  margin-top: 0px;
   text-align: center;
 }
 .create input {
@@ -255,4 +452,17 @@ code {
   height: 70px;
   border-radius: 50%;
   cursor: pointer;
+}
+.selectGreen {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 5px solid  rgb(89, 250, 143);
+}
+.green {
+  background: rgb(201, 255, 219);
+}
+.red {
+  background: rgb(255, 208, 208);
 }

@@ -1,22 +1,16 @@
-import {saveQuestion} from '../utils/data'
+import {getQues} from './questions'
+import {getData} from './receive'
+import firebase from '../firebase'
+import {updateData} from './receive'
 export const FORMAT = 'FORMAT'
+export const QUES_CREATED = 'QUES_CREATED'
 
-function format(question) {
-    return {
-        type: FORMAT,
-        question
-    }
-}
 
-export function formatting (question) {
-    return (dispatch) => {
-        return Promise.all([
-            saveQuestion(question)
-        ])
-        .then((ques) => {
-            dispatch(format(ques))
-        })
-    }
+function questionCreated(users) {
+  return {
+      type: QUES_CREATED,
+      users
+  }
 }
 
 //All to do with create new user
@@ -25,9 +19,14 @@ export function formattingEdit (ques, users, questions) {
         return Promise.all([
             makeArray(ques, users, questions)
         ])
-        .then((ques) => {
-            //console.log(ques, users)
-            dispatch(format(ques))
+        .then(() => {
+          //Tidy up 
+            setTimeout(() => {
+              return Promise.all([updateData(), getQues()])
+              .then((users) => {
+                dispatch(questionCreated(users[0]))
+              })
+            }, 1000)
         })
     }
 }
@@ -36,36 +35,34 @@ function makeArray (ques, users, questions) {
     return new Promise((res, rej) => {
         const authedUser = ques.author;
         const formattedQuestion = formatQuestionEdit(ques);
-        console.log({...users[0][authedUser]})
-    
+
         setTimeout(() => {
-          questions = {
-            ...questions[0],
-            [formattedQuestion.id]: formattedQuestion
-          }
-          
-          users = {
-            ...users[0],
-            [authedUser]: {
-                ...users[0][authedUser],
-                questions: users[0][authedUser].questions.concat([formattedQuestion.id])
-            }
-          }
+          const quesRef = firebase.database().ref('questions');
+          const refer = quesRef.push();
+          const theKey = refer.key
+          const realKey = quesRef.child(formattedQuestion.id)
+          realKey.set(formattedQuestion)
+
+          //push to users questions array - you are pushing formattedQuestion.id
+          const itemsRef = firebase.database().ref('items')
+          const reference = itemsRef.child(authedUser).child(authedUser).child("questions")
+          reference.push(formattedQuestion.id)
+
           res(formattedQuestion)
         }, 500)
     })
 }
 function formatQuestionEdit ({ optionOneText, optionTwoText, author }) {
     return {
-      id: "XXXX",
+      id: (Math.random() * 100000).toFixed(0),
       timestamp: Date.now(),
       author,
       optionOne: {
-        votes: [],
+        votes: {0: "undefined"},
         text: optionOneText,
       },
       optionTwo: {
-        votes: [],
+        votes: {0: "undefined"},
         text: optionTwoText,
       }
     }

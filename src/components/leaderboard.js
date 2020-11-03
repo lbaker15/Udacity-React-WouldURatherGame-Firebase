@@ -10,15 +10,16 @@ class board extends React.Component {
         "dog": dog,
         "monkey": monkey
     }
-    render(){
-        const leaderBoard = Object.values(this.props.receive[0]).map(x => {
+    render() {
+        console.log(this.props.receive)
+        const leaderBoard = this.props.receive.map(x => {
             return {
                 "name": x.name,
                 "avatar": x.avatarURL,
-                "ques": x.questions.length,
-                "ans": Object.entries(x.answers).length,
+                "ques": Object.values(x.questions).length - 1,
+                "ans": Object.entries(x.answers).length - 1,
                 "id": x.id,
-                "score": x.questions.length + Object.entries(x.answers).length
+                "score": (Object.values(x.questions).length - 1) + (Object.entries(x.answers).length - 1)
                 }
             })
         

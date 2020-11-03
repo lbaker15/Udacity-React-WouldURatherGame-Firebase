@@ -12,23 +12,50 @@ class QuestionList extends React.Component {
             answered: !prev.answered
         }))
     }
+    bg = () => {
+        const colors = ["#ffec82", "#ffec82", "#b866ff", "#54ecfd", "#b866ff", "#54ecfd", "#ffbce7", "#ffd7db", "#ffbce7", "#6b7fff"]
+        let i = Math.floor(Math.random() * colors.length)
+        return colors[i]
+    }
+    top = () => {
+        let i = Math.floor(Math.random() * 150)
+        return i + "px"
+    }
+    leftOne = () => {
+        let i = Math.floor(Math.random() * 12.5) + 75
+        return i + "%"
+    }
+    leftTwo = () => {
+        let j = Math.floor(Math.random() * 50) 
+        return - + j + "px"
+    }
+    scale = () => {
+        let i = Math.ceil(Math.random() * 15) + 8 
+        return `scale(${i/10})`
+    }
     render () {
+        if (this.props.answered === 0 || this.props.unanswered.length === 0) {
+            return (
+            <div className="aligner">
+                <div className="loader"></div>
+            </div>
+            )
+        } else {
         if (this.state.answered === false) {
         return (
             <div className="answered">
                 <div className="row">
                     <button 
-                    className="toggle"
+                    className="toggle colorSix"
                     onClick={() => this.answered()}
                     >Answered</button>
                 </div>
                 
                     <h1>Unanswered</h1>
-                        {this.props.unanswered.map(x => {
-                     
+                        {this.props.unanswered.map((x,i) => {
                         return (
-                            <div key={x.timestamp}>
-
+                            <div className="cardAligner" key={x.timestamp}>
+                            <div style={{  transform: this.scale(), marginTop: this.top(), marginLeft: (i % 2) ? this.leftOne() : this.leftTwo() ,background: this.bg()  }} className="randomCircle" />
                             <Link style={{ textDecoration:'none' }} to={`/question/${x.id}`}>
                                 <h2 className="link">Would You Rather...</h2>
                             </Link>
@@ -39,7 +66,7 @@ class QuestionList extends React.Component {
                                 value={x.optionOne.text}
                                 name={x.id}
                                 key={x.optionOne.text} 
-                                className="cardMap">
+                                className="cardMapMain">
                                     {x.optionOne.text}
                                 </button>
 
@@ -47,7 +74,7 @@ class QuestionList extends React.Component {
                                 value={x.optionTwo.text}
                                 name={x.id}
                                 key={x.optionTwo.text}  
-                                className="cardMap">
+                                className="cardMapMain">
                                     {x.optionTwo.text}
                                 </button>
 
@@ -58,32 +85,68 @@ class QuestionList extends React.Component {
             </div>
         )
     } else {
+        const optionOneVotes = this.props.answered.map(x => {
+            return Object.values(x.optionOne.votes).map(x => {
+                return Object.keys(x).splice(1)
+            })
+        })
+        const optionTwoVotes = this.props.answered.map(x => {
+            return Object.values(x.optionTwo.votes).map(x => {
+                return Object.keys(x).splice(1)
+            })
+        })
+        /*if (optionOneVotes[0] !== undefined) {
+            console.log(optionOneVotes.map(x => {
+                return x.map(x => x.filter((x, i) => {
+                    if (i > 0) {
+                    return x
+                    }
+                }))
+            }))
+        }*/
+        /*console.log(this.props.answered.map(x => {
+            return Object.values(x.optionOne.votes).map(x => {
+                return Object.keys(x).splice(1)
+            })
+        }))*/
         return (
         <div className="answered">
             <div className="row">
             <button 
-            className="toggle"
+            className="toggle colorSix"
             onClick={() => this.answered()}
             >Unanswered</button>
             </div>
             <h1>Answered</h1>
-            {this.props.answered.map(x => {
+            {this.props.answered.map((x, i) => {
                 
-                        const oneVotes = x.optionOne.votes.map(function(x, i, a) {
-                            if (a.length === 1) { return x } 
-                            else if (a.length > 1 && i < a.length - 1) { return x + " & " }
+                    const oneVotes = Object.values(x.optionOne.votes).map(function(x) {
+                        return Object.keys(x).map(function(x, i, a){
+                            if (a.length === 1) { return "No one yet!" } 
+                            else if (a.length > 1 && i > 0 && i < a.length - 1) { return x + " & " }
                             else if (a.length > 1 && i === a.length - 1) { return x + "." }
                             else { return " " }
                         })
-                        const twoVotes = x.optionTwo.votes.map(function(x, i, a) {
-                            if (a.length === 1) { return x } 
-                            else if (a.length > 1 && i < a.length - 1) { return x + " & " }
+                    })
+                    const twoVotes = Object.values(x.optionTwo.votes).map(function(x) {
+                        return Object.keys(x).map(function(x, i, a) {
+                            if (a.length === 1) { return "No one yet!" } 
+                            else if (a.length > 1 && i > 0 && i < a.length - 1) { return x + " & " }
                             else if (a.length > 1 && i === a.length - 1) { return x + "." }
                             else { return " " }
                         })
-
+                    })
+                    const oneLength =  Object.values(x.optionOne.votes).map(x => {
+                        return Object.keys(x)
+                    })
+                    const oneLengthNumber = oneLength[0].length - 1
+                    const twoLength =  Object.values(x.optionTwo.votes).map(x => {
+                        return Object.keys(x)
+                    })
+                    const twoLengthNumber = twoLength[0].length - 1
                         return (
                             <div key={x.timestamp}>
+                            <div style={{  transform: this.scale(), marginTop: this.top(), marginLeft: (i % 2) ? this.leftOne() : this.leftTwo() ,background: this.bg()  }} className="randomCircle" />
                             <h2>Would You Rather...</h2>
       
                             <div key={x.id} className="map">
@@ -91,30 +154,30 @@ class QuestionList extends React.Component {
                                 key={x.optionOne.text} 
                                 name={x.id}
                                 value={x.optionOne.text}
-                                className={(x.optionOne.votes.includes(this.props.signup)) ? "cardMapGreen" : "cardMap"}
+                                className={(Object.keys(x.optionOne.votes[0]).includes(this.props.signup)) ? "cardMapGreen" : "cardMap"}
                                 >
                                     {x.optionOne.text}
                                     <br />
                                     <br />
-                                    Voted for by: {(oneVotes.length !== 0) ? oneVotes : "0 people"}
+                                    Voted for by: {oneVotes}
                                     <br />
                                     <br />
-                                    Out of {x.optionOne.votes.length + x.optionTwo.votes.length} people who voted in this poll, {x.optionOne.votes.length / (x.optionOne.votes.length + x.optionTwo.votes.length) * 100 + "%"} chose this option!
+                                    Out of {oneLengthNumber + twoLengthNumber} people who voted in this poll, {oneLengthNumber / (oneLengthNumber + twoLengthNumber) * 100 + "%"} chose this option!
                                 </button>
 
                                 <button 
                                 key={x.optionTwo.text} 
                                 name={x.id}
                                 value={x.optionTwo.text}
-                                className={(x.optionTwo.votes.includes(this.props.signup)) ? "cardMapGreen" : "cardMap"}
+                                className={(Object.keys(x.optionTwo.votes[0]).includes(this.props.signup)) ? "cardMapGreen" : "cardMap"}
                                 >
                                     {x.optionTwo.text}
                                     <br />
                                     <br />
-                                    Voted for by: {(twoVotes.length !== 0) ? twoVotes : "0 people"}
+                                    Voted for by: {twoVotes}
                                     <br />
                                     <br />
-                                    Out of {x.optionOne.votes.length + x.optionTwo.votes.length} people who voted in this poll, {x.optionTwo.votes.length / (x.optionOne.votes.length + x.optionTwo.votes.length) * 100 + "%"} chose this option!
+                                    Out of {oneLengthNumber + twoLengthNumber} people who voted in this poll, {twoLengthNumber / (oneLengthNumber + twoLengthNumber) * 100 + "%"} chose this option!
                                 </button>
                             </div>
                             </div>
@@ -124,6 +187,7 @@ class QuestionList extends React.Component {
         )
 
         } 
+        }
     }
 }
 

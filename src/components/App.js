@@ -53,17 +53,17 @@ class App extends React.Component {
                   }} />
             )} />
         )
-     
         if (loading) {
         return (
-            <div>Loading</div>
+            <div className="aligner">
+                <div className="loader"></div>
+            </div>
             )
-        }  else {       
+        } else {       
             if (signup === null) {
 
                 return (       
                     <div>
-                        
                         <LoginPage />       
                         <Route path='/create' component={CreateUser} />
                         <PrivateRoute path="/leaderboard" component={board} />
@@ -81,15 +81,15 @@ class App extends React.Component {
 
                             <div className="welcome">
                                 <h1>Welcome {signup} </h1>
-                                <Link to="/"><button className="button">Home</button></Link>
+                                <Link to="/"><button className="button colorOne">Home</button></Link>
                                 <Link to="/leaderboard">
-                                    <button className="button">Leaderboard</button>
+                                    <button className="button colorTwo">Leaderboard</button>
                                 </Link>
                                 <Link to="/add">
-                                    <button className="button">Add question</button>
+                                    <button className="button colorThree">Add question</button>
                                 </Link>
                                 <Link to="/">
-                                    <button className="button" onClick={(e) => this.logout(e)}>Log Out</button>
+                                    <button className="button colorFour" onClick={(e) => this.logout(e)}>Log Out</button>
                                 </Link>
                             </div>
                         

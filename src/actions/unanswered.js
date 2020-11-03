@@ -1,8 +1,8 @@
 export const UNANSWERED = 'UNANSWERED'
 
-export function unansweredQuestions (questionList, user, answeredQ) {
+export function unansweredQuestions (questionList, user, userList) {
     return {
         type: UNANSWERED,
-        questionList, user, answeredQ
+        questionList, user, userList
     }
 }

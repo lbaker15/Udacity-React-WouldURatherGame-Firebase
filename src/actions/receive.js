@@ -1,4 +1,3 @@
-import {getUsers} from '../utils/data'
 import firebase from '../firebase'
 export const RECEIVE_DATA = 'RECEIVE_DATA'
 
@@ -17,7 +16,6 @@ export function getData () {
                 let items = snapshot.val()
                 let newState = []
                 for (let item in items) {
-                    //console.log(item, Object.values(items[item])[0] )
                     newState.push({
                         avatarURL: Object.values(items[item])[0].avatarURL,
                         name: Object.values(items[item])[0].name,
@@ -25,7 +23,6 @@ export function getData () {
                         answers: Object.values(items[item])[0].answers,
                         questions: Object.values(items[item])[0].questions
                     })
-                    
                 }
                 res(newState)
             })
@@ -36,19 +33,25 @@ export function getData () {
     }
 }
 
-/*
-const itemsRef = firebase.database().ref('items')
-itemsRef.on('value', (snapshot) => {
-    let items = snapshot.val()
-    let newState = []
-    for (let item in items) {
-        newState.push({
-            avatarURL: items[item].avatarURL,
-            name: items[item].name,
-            id: items[item].username
+
+export function updateData () {
+        return new Promise((res, rej) => {
+            const itemsRef = firebase.database().ref('items')
+            itemsRef.on('value', (snapshot) => {
+                let items = snapshot.val()
+                let newState = []
+                for (let item in items) {
+                    //console.log(item, Object.values(items[item])[0] )
+                    newState.push({
+                        avatarURL: Object.values(items[item])[0].avatarURL,
+                        name: Object.values(items[item])[0].name,
+                        id: Object.values(items[item])[0].id,
+                        answers: Object.values(items[item])[0].answers,
+                        questions: Object.values(items[item])[0].questions
+                    })
+                }
+                res(newState)
+            })
         })
-    }
-    this.setState({
-        items: newState
-    })
-    */
+}
+
