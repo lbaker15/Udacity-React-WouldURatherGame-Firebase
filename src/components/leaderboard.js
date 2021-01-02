@@ -11,7 +11,6 @@ class board extends React.Component {
         "monkey": monkey
     }
     render() {
-        console.log(this.props.receive)
         const leaderBoard = this.props.receive.map(x => {
             return {
                 "name": x.name,
