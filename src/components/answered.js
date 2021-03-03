@@ -34,7 +34,9 @@ class QuestionList extends React.Component {
         return `scale(${i/10})`
     }
     render () {
-        if (this.props.answered === 0 || this.props.unanswered.length === 0) {
+        const {answered, unanswered} = this.props;
+        console.log("HOME LIST", this.props.answered, this.props.unanswered)
+        if (this.props.answered === 0 && this.props.unanswered.length === 0) {
             return (
             <div className="aligner">
                 <div className="loader"></div>
@@ -42,16 +44,32 @@ class QuestionList extends React.Component {
             )
         } else {
         if (this.state.answered === false) {
-        return (
-            <div className="answered">
-                <div className="row">
-                    <button 
-                    className="toggle colorSix"
-                    onClick={() => this.answered()}
-                    >Answered</button>
-                </div>
-                
-                    <h1>Unanswered</h1>
+            if (unanswered.length === 0) {
+                return (
+                    <React.Fragment>
+                    <div className="answered">
+                        <div className="row">
+                            <button 
+                            className="toggle colorSix moveUp"
+                            onClick={() => this.answered()}
+                            >Answered</button>
+                        </div>
+                    </div>
+                    <div className="cardAligner noQuestions">
+                    You've answered all the questions. Why not add another!
+                    </div>
+                    </React.Fragment>
+                )
+            } else {
+                return (
+                    <div className="answered">
+                        <div className="row">
+                            <button 
+                            className="toggle colorSix"
+                            onClick={() => this.answered()}
+                            >Answered</button>
+                        </div>
+                        <h1>Unanswered</h1>
                         {this.props.unanswered.map((x,i) => {
                         return (
                             <div className="cardAligner" key={x.timestamp}>
@@ -61,29 +79,27 @@ class QuestionList extends React.Component {
                             </Link>
 
                             <div key={x.id} className="map">
+                            <button 
+                            value={x.optionOne.text}
+                            name={x.id}
+                            key={x.optionOne.text} 
+                            className="cardMapMain">
+                            {x.optionOne.text}
+                            </button>
 
-                                <button 
-                                value={x.optionOne.text}
-                                name={x.id}
-                                key={x.optionOne.text} 
-                                className="cardMapMain">
-                                    {x.optionOne.text}
-                                </button>
-
-                                <button 
-                                value={x.optionTwo.text}
-                                name={x.id}
-                                key={x.optionTwo.text}  
-                                className="cardMapMain">
-                                    {x.optionTwo.text}
-                                </button>
-
+                            <button 
+                            value={x.optionTwo.text}
+                            name={x.id}
+                            key={x.optionTwo.text}  
+                            className="cardMapMain">
+                            {x.optionTwo.text}
+                            </button>
                             </div>
-                            </div>
+                        </div>
                         )
                     })}
-            </div>
-        )
+                </div>
+                )}
     } else {
         const optionOneVotes = this.props.answered.map(x => {
             return Object.values(x.optionOne.votes).map(x => {
@@ -95,20 +111,21 @@ class QuestionList extends React.Component {
                 return Object.keys(x).splice(1)
             })
         })
-        /*if (optionOneVotes[0] !== undefined) {
-            console.log(optionOneVotes.map(x => {
-                return x.map(x => x.filter((x, i) => {
-                    if (i > 0) {
-                    return x
-                    }
-                }))
-            }))
-        }*/
-        /*console.log(this.props.answered.map(x => {
-            return Object.values(x.optionOne.votes).map(x => {
-                return Object.keys(x).splice(1)
-            })
-        }))*/
+        if (answered.length === 0) {
+            return (
+                <div className="answered">
+                    <div className="row">
+                        <button 
+                        className="toggle colorSix"
+                        onClick={() => this.answered()}
+                        >Answered</button>
+                    </div>
+                    <div className="cardAligner">
+                    You've not answered any questions yet. Why not answer one now!
+                    </div>
+                </div>
+            )
+        } else {
         return (
         <div className="answered">
             <div className="row">
@@ -184,10 +201,8 @@ class QuestionList extends React.Component {
                         )
                     })}
         </div>
-        )
-
-        } 
-        }
+        )}
+        }}
     }
 }
 

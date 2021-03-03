@@ -48,6 +48,7 @@ class AnsweredLink extends React.Component {
 
         if (theQuestion.length !== 0) {
         const quesAuthor = Object.values(theQuestion[0])[0].author
+        console.log(quesAuthor)
         const avatarURL = receive.filter( x => x.id === quesAuthor )[0].avatarURL
         const author = quesAuthor
         const avatar = this.avatars

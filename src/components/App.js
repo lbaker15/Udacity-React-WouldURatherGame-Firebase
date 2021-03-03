@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getData } from '../actions/receive'
 import { getQues } from '../actions/questions'
-import { Route, Link, Redirect, useLocation, useHistory } from 'react-router-dom'
+import { Route, Link, Redirect, useLocation, useHistory, HashRouter } from 'react-router-dom'
 import HomeList from './answered'
 import { signOut } from '../actions/signup'
 import { unansweredQuestions } from '../actions/unanswered'
@@ -55,30 +55,33 @@ class App extends React.Component {
         )
         if (loading) {
         return (
+            <HashRouter basename="/">
             <div className="aligner">
                 <div className="loader"></div>
             </div>
+            </HashRouter>
             )
         } else {       
+            console.log("TEST", signup, this.props.create)
             if (signup === null) {
-
-                return (       
+                return (      
+                    <HashRouter basename="/">
                     <div>
                         <LoginPage />       
                         <Route path='/create' component={CreateUser} />
                         <PrivateRoute path="/leaderboard" component={board} />
                         <PrivateRoute path="/add" component={addQuestion} />
                         <PrivateRoute path='/question/:value' component={AnsweredLink} />
-                        {this.props.create !== true && 
+                        {/* {this.props.create !== true && 
                             <Route path='/:value' component={Error} />
-                        }
-
+                        } */}
                     </div>
+                    </HashRouter> 
                 )}      
                 else { 
                     return (
+                        <HashRouter basename="/">
                         <div> 
-
                             <div className="welcome">
                                 <h1>Welcome {signup} </h1>
                                 <Link to="/"><button className="button colorOne">Home</button></Link>
@@ -96,15 +99,14 @@ class App extends React.Component {
                             <Route exact path='/' render={() => (         
                                 <div>
                                   <HomeList />
-           
                                 </div>
                             )} />
             
                             <Route path='/question/:value' component={AnsweredLink} />
                             <Route path='/add' component={addQuestion} />
                             <Route path='/leaderboard' component={board} />
-                            
                         </div>
+                    </HashRouter>
                     )
                 }   
             }

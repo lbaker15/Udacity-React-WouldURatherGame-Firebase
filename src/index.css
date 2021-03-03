@@ -207,6 +207,21 @@ code {
   margin-left: 7.5px;
   cursor: pointer;
 }
+.blue {
+  background: var(--blue);
+}
+.blueOpaque {
+  background: var(--blue);
+  opacity: 0.3;
+}
+.noQuestions {
+  margin-top: 75px;
+  width: 100vw;
+  text-align: center;
+}
+.moveUp {
+  margin-top: -50px;
+}
 .signIn {
   margin-top: 40px;
   width: 100%;

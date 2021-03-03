@@ -5,6 +5,7 @@ import { FORMAT } from '../actions/format'
 export default function questions (state = [], action) {
     switch (action.type) {
         case RECEIVE_QUESTIONS :
+            console.log("receive questions reducer")
             //console.log("reducer", state, action.questions.filter(x => x))
             const newStat = action.questions
             return newStat

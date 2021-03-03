@@ -95,9 +95,8 @@ class CreateUser extends React.Component {
             avatar: e.target.id
         })
     }
-
-
     render() {
+        const {name, id, avatar} = this.state;
          return (
          <div className="aligner">
             <div className="create">
@@ -134,11 +133,11 @@ class CreateUser extends React.Component {
 
                     <button 
                     onClick={() => this.create()}
-                    className="button">
+                    className={(name.length > 1 && id.length > 1 && avatar.length > 1) ? "button blue" : "button blueOpaque"}> 
                         Create My User
                     </button>
                     <Link to="/">
-                        <button className="button">
+                        <button className="button blue">
                             Home
                         </button>
                     </Link>

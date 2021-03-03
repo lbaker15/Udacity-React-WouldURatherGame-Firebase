@@ -1,0 +1,11 @@
+Question 8xf0y6ziyjabvozdd253nd always exists - do not delete.
+Votes on question 8xf0y6ziyjabvozdd253nd are set to 0 - "undefined" - do not change this.
+The author of question 8xf0y6ziyjabvozdd253nd is set as "GBaker" - do not delete this user.
+If you delete a user you MUST DELETE the votes array on individual questions - this will mess up leaderboard.
+
+User "GBaker" must always exist.
+When a user is created it will default question 8xf0y6ziyjabvozdd253nd in the questions array - questions created by this user.  leaderboard accounts for this.
+User is also created with 123: "optionOne" under answers - questions answered.  This is filtered out of the answered array so does not crash answered section on homepage.
+
+Actions/format is where all firebase functions are
+

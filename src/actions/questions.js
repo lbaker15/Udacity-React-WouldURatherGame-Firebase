@@ -9,6 +9,7 @@ function receiveQuestions(questions) {
 }
 
 export function getQues () {
+    console.log("getQues fired")
     return (dispatch) => {
         new Promise((res, rej) => {
             const itemsRef = firebase.database().ref('questions')
