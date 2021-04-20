@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/HostingRatherGame/static/css/main.3c406ec4.chunk.css",
+    "main.js": "/HostingRatherGame/static/js/main.0e396f6f.chunk.js",
+    "main.js.map": "/HostingRatherGame/static/js/main.0e396f6f.chunk.js.map",
+    "runtime-main.js": "/HostingRatherGame/static/js/runtime-main.36bf4983.js",
+    "runtime-main.js.map": "/HostingRatherGame/static/js/runtime-main.36bf4983.js.map",
+    "static/js/2.077ba068.chunk.js": "/HostingRatherGame/static/js/2.077ba068.chunk.js",
+    "static/js/2.077ba068.chunk.js.map": "/HostingRatherGame/static/js/2.077ba068.chunk.js.map",
+    "index.html": "/HostingRatherGame/index.html",
+    "precache-manifest.d1ee1264b67328d48914d2626add201e.js": "/HostingRatherGame/precache-manifest.d1ee1264b67328d48914d2626add201e.js",
+    "service-worker.js": "/HostingRatherGame/service-worker.js",
+    "static/css/main.3c406ec4.chunk.css.map": "/HostingRatherGame/static/css/main.3c406ec4.chunk.css.map",
+    "static/js/2.077ba068.chunk.js.LICENSE.txt": "/HostingRatherGame/static/js/2.077ba068.chunk.js.LICENSE.txt",
+    "static/media/dog.png": "/HostingRatherGame/static/media/dog.548a659c.png",
+    "static/media/elephant.png": "/HostingRatherGame/static/media/elephant.2eaee86e.png",
+    "static/media/monkey.png": "/HostingRatherGame/static/media/monkey.68a5aa10.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.36bf4983.js",
+    "static/js/2.077ba068.chunk.js",
+    "static/css/main.3c406ec4.chunk.css",
+    "static/js/main.0e396f6f.chunk.js"
+  ]
+}
