@@ -215,9 +215,15 @@ code {
   opacity: 0.3;
 }
 .noQuestions {
-  margin-top: 75px;
+  margin-top: 115px;
   width: 100vw;
   text-align: center;
+  padding-top: 70px;
+}
+.noQuestions p {
+  font-size: 24px;
+  width: 60%;
+  margin-left: 20%;
 }
 .moveUp {
   margin-top: -50px;

@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 
 class QuestionList extends React.Component {
@@ -35,7 +37,7 @@ class QuestionList extends React.Component {
     }
     render () {
         const {answered, unanswered} = this.props;
-        console.log("HOME LIST", this.props.answered, this.props.unanswered)
+        console.log("HOME LIST", 'loaded')
         if (this.props.answered === 0 && this.props.unanswered.length === 0) {
             return (
             <div className="aligner">
@@ -56,7 +58,11 @@ class QuestionList extends React.Component {
                         </div>
                     </div>
                     <div className="cardAligner noQuestions">
-                    You've answered all the questions. Why not add another!
+                        <p>You've answered all the questions. Why not add another!</p>
+                        <FontAwesomeIcon 
+                        style={{marginTop: '-10px', fontSize: '60px', color: '#6b7fff'}}
+                        // style={{position: 'absolute', marginLeft: '140px', color: 'rgb(123, 66, 255, 0.6)', fontSize: '50px', marginTop: '180px'}}
+                        icon={faPlusCircle} />
                     </div>
                     </React.Fragment>
                 )
@@ -120,8 +126,12 @@ class QuestionList extends React.Component {
                         onClick={() => this.answered()}
                         >Answered</button>
                     </div>
-                    <div className="cardAligner">
-                    You've not answered any questions yet. Why not answer one now!
+                    <div className="noQuestions cardAligner">
+                        <p>You've not answered any questions yet. Why not answer one now!</p>
+                        <FontAwesomeIcon 
+                        style={{marginTop: '-10px', fontSize: '60px', color: '#6b7fff'}}
+                        // style={{position: 'absolute', marginLeft: '140px', color: 'rgb(123, 66, 255, 0.6)', fontSize: '50px', marginTop: '180px'}}
+                        icon={faPlusCircle} />
                     </div>
                 </div>
             )

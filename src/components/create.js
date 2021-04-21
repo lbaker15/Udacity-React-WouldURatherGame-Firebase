@@ -22,13 +22,26 @@ class CreateUser extends React.Component {
         idclick: false
     }
     create = () => {
+        let one = String(this.state.id).includes('.')
+        let two = String(this.state.name).includes('.')
+        if (one || two) {
+            this.setState({
+                alert: 'Please ensure name and username do NOT include any characters such as: @ , . ! ? \ / '
+            })
+        } else {
         if (this.state.avatar.length && this.state.name.length && this.state.id.length > 1) {
             
             const itemsRef = firebase.database().ref('items')
             itemsRef.on('value', (snapshot) => {
                 let items = snapshot.val()
                 const person = items[this.state.id]
-                if (person === undefined) {
+                console.log('LOOK HERE', person, person === undefined)
+                if (person !== undefined) {
+                    this.setState({
+                        alert: 'This username has been taken.'
+                    })
+                }
+                else if (person === undefined) {
                     const obj = {
                         "id": this.state.id,
                         "name": this.state.name,
@@ -51,14 +64,19 @@ class CreateUser extends React.Component {
                     })
                     .then(() => this.props.dispatch(getData()))
                     .then(() => {
-                        this.setState((prev) => ({
+                        this.setState({
+                            alert: 'User created successfully, you will now be redirected to the homepage.'
+                        })
+                        setTimeout(() => {
+                            this.setState((prev) => ({
                             submitted: !prev.submitted,
-                        }))               
+                        }))       
+                        }, 10000)        
                     }) 
                 } else {
-                    this.setState({
-                        alert: 'This username is already taken, please select another.'
-                    })
+                    // this.setState({
+                    //     alert: 'This username is already taken, please select another.'
+                    // })
                 }
             })
             /**/     
@@ -68,8 +86,9 @@ class CreateUser extends React.Component {
             })
         }
     }
+    }
     update = (e) => {
-        console.log(e.target.id)
+        console.log(e.target.value)
         this.setState({
             [e.target.id]: e.target.value,
         })
